@@ -1,0 +1,47 @@
+module OR_8bits (
+	input A0, A1,  A2, A3, A4, A5, A6, A7,
+input B0, B1, B2, B3, B4, B5, B6, B7,
+	output S0, S1, S2, S3, S4, S5, S6, S7
+);
+	PortaOr Or1(
+	.A(A0),
+	.B(B0),
+	.S(S0)
+);
+	PortaOr Or2(
+	.A(A1),
+	.B(B1),
+	.S(S1)
+);
+	PortaOr Or3(
+	.A(A2),
+	.B(B2),
+	.S(S2)
+);
+	PortaOr Or4(
+	.A(A3),
+	.B(B3),
+	.S(S3)
+);
+	PortaOr Or5(
+	.A(A4),
+	.B(B4),
+	.S(S4)
+);
+	PortaOr Or6(
+	.A(A5),
+	.B(B5),
+	.S(S5)
+);
+	PortaOr Or7(
+	.A(A6),
+	.B(B6),
+	.S(S6)
+);
+	PortaOr Or8(
+	.A(A7),
+	.B(B7),
+	.S(S7)
+);
+
+endmodule

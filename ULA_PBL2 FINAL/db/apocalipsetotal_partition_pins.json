@@ -1,0 +1,177 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "LEDZ",
+					"strict" : false
+				},
+				{
+					"name" : "LEDE",
+					"strict" : false
+				},
+				{
+					"name" : "LEDOV",
+					"strict" : false
+				},
+				{
+					"name" : "LEDCARRY",
+					"strict" : false
+				},
+				{
+					"name" : "LEDRES",
+					"strict" : false
+				},
+				{
+					"name" : "SEG0[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG0[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG0[2]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG0[3]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG0[4]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG0[5]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG0[6]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG1[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG1[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG1[2]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG1[3]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG1[4]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG1[5]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG1[6]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG2[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG2[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG2[2]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG2[3]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG2[4]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG2[5]",
+					"strict" : false
+				},
+				{
+					"name" : "SEG2[6]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDc[0]",
+					"strict" : false
+				},
+				{
+					"name" : "LEDc[1]",
+					"strict" : false
+				},
+				{
+					"name" : "LED_MULT_DONE",
+					"strict" : false
+				},
+				{
+					"name" : "ENT[2]",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "ENT[7]",
+					"strict" : false
+				},
+				{
+					"name" : "ENT[5]",
+					"strict" : false
+				},
+				{
+					"name" : "ENT[6]",
+					"strict" : false
+				},
+				{
+					"name" : "ENT[4]",
+					"strict" : false
+				},
+				{
+					"name" : "ENT[3]",
+					"strict" : false
+				},
+				{
+					"name" : "ENT[1]",
+					"strict" : false
+				},
+				{
+					"name" : "ENT[0]",
+					"strict" : false
+				},
+				{
+					"name" : "MuxAR",
+					"strict" : false
+				},
+				{
+					"name" : "rst",
+					"strict" : false
+				},
+				{
+					"name" : "Cin",
+					"strict" : false
+				},
+				{
+					"name" : "botao",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

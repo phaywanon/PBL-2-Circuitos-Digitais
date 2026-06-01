@@ -1,0 +1,6 @@
+module contador(
+	input clk,
+	input controle,
+	output s1, s0
+);
+endmodule

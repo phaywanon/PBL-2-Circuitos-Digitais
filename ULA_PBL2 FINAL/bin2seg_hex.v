@@ -1,0 +1,66 @@
+module bin2seg_hex(
+    input A, B, C, D,     
+    output a, b, c, d, e, f, g  
+);
+
+    wire nA, nB, nC, nD;
+    not (nA, A);
+    not (nB, B);
+    not (nC, C);
+    not (nD, D);
+
+    // Segmento a
+    wire a1, a2, a3, a4;
+    and (a1, nA, nB, nC, D);
+    and (a2, nA, B, nC, nD);
+    and (a3, A, nB, C, D);
+    and (a4, A, B, nC, D);
+    or  (a, a1, a2, a3, a4);
+
+	 // Segmento b
+	 wire b1, b2, b3, b4;
+	 and (b1, nA, B, nC, D);
+	 and (b2, B, C, nD);
+	 and (b3, A, C, D);
+	 and (b4, A, B, nD);
+	 and (b, b1, b2, b3, b4);
+
+
+    // Segmento c
+    wire c1, c2, c3;
+    and (c1, nA, nB, C, nD);
+    and (c2, A, B, C);
+    and (c3, A, B, nD);
+    or  (c, c1, c2, c3);
+
+    // Segmento d
+    wire d1, d2, d3, d4;
+    and (d1, nA, B, nC, nD);
+    and (d2, A, nB, C, nD);
+    and (d3, nB, nC, D);
+    and (d4, B, C, D);
+    or  (d, d1, d2, d3, d4);
+
+    // Segmento e
+    wire e1, e2, e3;
+    and (e1, nA, B, nC);
+    and (e2, nA, D);
+    and (e3, nB, nC, D);
+    or  (e, e1, e2, e3);
+
+    // Segmento f
+    wire f1, f2, f3, f4;
+    and (f1, nA, nB, C);
+    and (f2, nA, nB, D);
+    and (f3, nA, C, D);
+    and (f4, A, B, nC, D);
+    or  (f, f1, f2, f3, f4);
+
+    // Segmento g
+    wire g1, g2, g3;
+    and (g1, nA, nB, nC);
+    and (g2, nA, B, C, D);
+    and (g3, A, B, nC, nD);
+    or  (g, g1, g2, g3);
+
+endmodule

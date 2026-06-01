@@ -1,0 +1,47 @@
+module XOR_8bits (
+	input [7:0] A,
+	input [7:0] B,
+	output [7:0] S
+);
+	PortaXor Xor1(
+	.A(A[0]),
+	.B(B[0]),
+	.S(S[0])
+);
+	PortaXor Xor2(
+	.A(A[1]),
+	.B(B[1]),
+	.S(S[1])
+);
+	PortaXor Xor3(
+	.A(A[2]),
+	.B(B[2]),
+	.S(S[2])
+);
+	PortaXor Xor4(
+	.A(A[3]),
+	.B(B[3]),
+	.S(S[3])
+);
+	PortaXor Xor5(
+	.A(A[4]),
+	.B(B[4]),
+	.S(S[4])
+);
+	PortaXor Xor6(
+	.A(A[5]),
+	.B(B[5]),
+	.S(S[5])
+);
+	PXortaXor Xor7(
+	.A(A[6]),
+	.B(B[6]),
+	.S(S[6])
+);
+	PortaXor Xor8(
+	.A(A[7]),
+	.B(B[7]),
+	.S(S[7])
+);
+
+endmodule

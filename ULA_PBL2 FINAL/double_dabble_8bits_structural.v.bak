@@ -1,0 +1,52 @@
+module double_dabble_8bits_structural(
+    input clk,
+    input rst_n,
+    input en,            // habilita o processamento
+    input [7:0] byte_in,
+    output [3:0] centena,
+    output [3:0] dezena,
+    output [3:0] unidade
+);
+    // ===== BCD registradores =====
+    wire [3:0] centena_next, dezena_next, unidade_next;
+
+    registrador_bcd R_c(.clk(clk), .rst_n(rst_n), .en(en), .D(centena_next), .Q(centena));
+    registrador_bcd R_d(.clk(clk), .rst_n(rst_n), .en(en), .D(dezena_next), .Q(dezena));
+    registrador_bcd R_u(.clk(clk), .rst_n(rst_n), .en(en), .D(unidade_next), .Q(unidade));
+
+    // ===== Comparadores ≥5 =====
+    wire add3_c, add3_d, add3_u;
+
+    comp5_structural C_c(.Q3(centena[3]), .Q2(centena[2]), .Q1(centena[1]), .Q0(centena[0]), .ge5(add3_c));
+    comp5_structural C_d(.Q3(dezena[3]),  .Q2(dezena[2]),  .Q1(dezena[1]),  .Q0(dezena[0]),  .ge5(add3_d));
+    comp5_structural C_u(.Q3(unidade[3]), .Q2(unidade[2]), .Q1(unidade[1]), .Q0(unidade[0]), .ge5(add3_u));
+
+    // ===== Add-3 condicional =====
+    wire [3:0] centena_add, dezena_add, unidade_add;
+
+    add3_cond_structural A3_c(.Q3(centena[3]), .Q2(centena[2]), .Q1(centena[1]), .Q0(centena[0]), .add3(add3_c),
+                               .Y3(centena_add[3]), .Y2(centena_add[2]), .Y1(centena_add[1]), .Y0(centena_add[0]));
+    add3_cond_structural A3_d(.Q3(dezena[3]),  .Q2(dezena[2]),  .Q1(dezena[1]),  .Q0(dezena[0]),  .add3(add3_d),
+                               .Y3(dezena_add[3]),  .Y2(dezena_add[2]),  .Y1(dezena_add[1]),  .Y0(dezena_add[0]));
+    add3_cond_structural A3_u(.Q3(unidade[3]), .Q2(unidade[2]), .Q1(unidade[1]), .Q0(unidade[0]), .add3(add3_u),
+                               .Y3(unidade_add[3]), .Y2(unidade_add[2]), .Y1(unidade_add[1]), .Y0(unidade_add[0]));
+
+    // ===== Shift Left =====
+    // Centena: shift left = {centena_add[2:0], dezena_add[3]}
+    or (centena_next[3], 1'b0, 1'b0); // MSB do centena, sempre 0 (como redundância)
+    or (centena_next[2], centena_add[2], 1'b0);
+    or (centena_next[1], centena_add[1], 1'b0);
+    or (centena_next[0], centena_add[0], dezena_add[3]);
+
+    // Dezena: shift left = {dezena_add[2:0], unidade_add[3]}
+    or (dezena_next[3], 1'b0, 1'b0); // MSB do dezena, sempre 0
+    or (dezena_next[2], dezena_add[2], 1'b0);
+    or (dezena_next[1], dezena_add[1], 1'b0);
+    or (dezena_next[0], dezena_add[0], unidade_add[3]);
+
+    // Unidade: shift left = {unidade_add[2:0], bit do byte}
+    or (unidade_next[3], 1'b0, 1'b0); // MSB do unidade, sempre 0
+    or (unidade_next[2], unidade_add[2], 1'b0);
+    or (unidade_next[1], unidade_add[1], 1'b0);
+    or (unidade_next[0], unidade_add[0], byte_in[7]); // começa com MSB do byte
+endmodule

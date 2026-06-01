@@ -1,0 +1,119 @@
+module ULA_8bits(
+    input [7:0] A,
+    input [7:0] B,
+    input Cin, // carry in
+    input E0, E1, E2,// seleção de operação no MUX (3 bits)
+    output [7:0] R,
+    output a0, a1, b0, b1, c0, c1, d0, d1, e0, e1, f0, f1, g0, g1,
+	 output led1, led2
+);
+
+    wire [7:0] S_soma,; //saida da soma
+	 wire C_soma; //saida carryout
+    wire [7:0] D_sub; //saida da subtraçao
+	 wire B_sub; //saida borrowout
+    wire [7:0] AND; //saida das AND
+    wire [7:0] OR;  //saida das OR
+    wire [7:0] XOR; //saida das XOR
+    wire [7:0] P_p; //saida da multiplicaçao
+    wire [7:0] Q_q; //saida da divisao
+	 
+    somador_8bits soma(
+    .A(A),
+    .B(B),
+    .Cin(Cin),
+    .Cout(C_soma),
+    .S(S_soma)
+    );
+   
+    subtrator_8bits sub(
+    .A(A),
+    .B(B),
+    .Bin(Cin),
+    .Bout(B_sub),
+    .Dif(D_sub)
+    );
+     
+     multiplicador_4bits mult(
+     .A0(A0),.A1(A1),.A2(A2),.A3(A3),
+     .B0(B0),.B1(B1),.B2(B2),.B3(B3),
+     .P0(P_p0), .P1(P_p1), .P2(P_p2), .P3(P_p3), .P4(P_p4), .P5(P_p5), .P6(P_p6), .P7(P_p7)
+     );
+      
+     AND_8bits porta_and(
+     .A(A),
+     .B(B),
+     .S(AND)
+     );
+
+     OR_8bits porta_or(
+     .A(A),
+     .B(B),
+     .S(OR)
+     );
+
+     XOR_8bits porta_xor(
+     .A(A),
+     .B(B),
+     .S(XOR)
+     );
+      
+      divisor div(
+     .A0(A0),.A1(A1),.A2(A2),.A3(A3),
+     .B0(B0),.B1(B1),.B2(B2),.B3(B3),
+     .Q0(Q_q0), .Q1(Q_q1), .Q2(Q_q2), .Q3(Q_q3)
+      );
+      
+	 multiplexador_8bits mux_principal(
+	 .S(S_soma),
+	 .Dif(D_sub),
+	 .P(P_p),
+	 .Q(Q_q),
+	 .And(AND),
+	 .Or(OR),
+	 .Xor(XOR),
+	 .E0(E0), .E1(E1), .E2(E2),
+	 .R(R)
+);
+
+    decodificador_display display(
+     .R0(R7), .R1(R6), .R2(R5), .R3(R4),
+     .R4(R3), .R5(R2), .R6(R1), .R7(R0),
+     .a0(a0), .a1(a1), .b0(b0), .b1(b1),
+     .c0(c0), .c1(c1), .d0(d0), .d1(d1),
+     .e0(e0), .e1(e1), .f0(f0), .f1(f1),
+     .g0(g0), .g1(g1)
+);
+
+	flagzero fz(
+	 .S_soma0(S_soma0), .S_soma1(S_soma1), .S_soma2(S_soma2), .S_soma3(S_soma3),
+	 .D_sub0(D_sub0), .D_sub1(D_sub1), .D_sub2(D_sub2), .D_sub3(D_sub3),
+	 .AND0(AND0), .AND1(AND1), .AND2(AND2), .AND3(AND3),
+	 .OR0(OR0), .OR1(OR1), .OR2(OR2), .OR3(OR3),
+	 .XOR0(XOR0), .XOR1(XOR1), .XOR2(XOR2), .XOR3(XOR3),
+	 .Q_q0(Q_q0), .Q_q1(Q_q1), .Q_q2(Q_q2), .Q_q3(Q_q3),
+	 .P_p0(P_p0), .P_p1(P_p1), .P_p2(P_p2), .P_p3(P_p3), .P_p4(P_p4), .P_p5(P_p05), .P_p6(P_p6), .P_p7(P_p7),
+	 .E0(E0), .E1(E1), .E2(E2),
+	 .ZEROFLAG(ZEROflag)
+);
+
+	flagERRO fe(
+	 .E0(E0), .E1(E1), .E2(E2),
+	 .B0(B0), .B1(B1), .B2(B2), .B3(B3),
+	 .Q0(Q0), .Q1(Q1), .Q2(Q2), .Q3(Q3),
+	 .Q_q0(Q_q0), .Q_q1(Q_q1), .Q_q2(Q_q2), .Q_q3(Q_q3),
+	 .flagerro(ERRflag)
+);	
+	flagoverflow ovf(
+		.S_soma4(C_soma),
+		.D_sub_neg(B_sub), 
+		.P_p4(P_p4), .P_p5(P_p5), .P_p6(P_p6), .P_p7(P_p7), 
+		.E0(E0), .E1(E1), .E2(E2),
+		.OVFflag(OVflag)
+);
+	muxflag mf(
+	 .ZEROflag(ZEROflag), .ERRflag(ERRflag), .OVflag(OVflag),
+	 .led1(led1), .led2(led2)
+);
+
+endmodule

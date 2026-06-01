@@ -1,0 +1,38 @@
+module NOT_8bits (
+	input [7:0] A,
+	output [7:0]nA
+);
+	PortaNot Not1(
+	.A(A[0]),
+	.nA(nA[0])
+);
+	PortaNot Not2(
+	.A(A[1]),
+	.nA(nA[1])
+);
+	PortaNot Not3(
+	.A(A[2]),
+	.nA(nA[2])
+);
+	PortaNot Not4(
+	.A(A[3]),
+	.nA(nA[3])
+);
+	PortaNot Not5(
+	.A(A[4]),
+	.nA(nA[4])
+);
+	PortaNot Not6(
+	.A(A[5]),
+	.nA(nA[5])
+);
+	PortaNot Not7(
+	.A(A[6]),
+	.nA(nA[6])
+);
+	PortaNot Not8(
+	.A(A[7]),
+	.nA(nA[7])
+);
+
+endmodule

@@ -1,0 +1,74 @@
+module somador_8bits(
+    input A0, A1, A2, A3, A4, A5, A6, A7,
+    input B0, B1, B2, B3, B4, B5, B6, B7,
+    input Cin,
+    output S0, S1, S2, S3, S4, S5, S6, S7,
+    output Cout
+);
+    wire cout0_cin1, cout1_cin2, cout2_cin3, cout3_cin4, cout4_cin5, cout5_cin6, cout6_cin7;
+
+    somador_1bit somador1(
+        .A(A0),
+        .B(B0),
+        .Cin(Cin),
+        .S(S0),
+        .Cout(cout0_cin1)
+    );
+
+    somador_1bit somador2(
+        .A(A1),
+        .B(B1),
+        .Cin(cout0_cin1),
+        .S(S1),
+        .Cout(cout1_cin2)
+    );
+
+    somador_1bit somador3(
+        .A(A2),
+        .B(B2),
+        .Cin(cout1_cin2),
+        .S(S2),
+        .Cout(cout2_cin3)
+    );
+
+    somador_1bit somador4(
+        .A(A3),
+        .B(B3),
+        .Cin(cout2_cin3),
+        .S(S3),
+        .Cout(cout3_cin4)
+    );
+
+    somador_1bit somador5(
+        .A(A4),
+        .B(B4),
+        .Cin(cout3_cin4),
+        .S(S4),
+        .Cout(cout4_cin5)
+    );
+
+    somador_1bit somador6(
+        .A(A5),
+        .B(B5),
+        .Cin(cout4_cin5),
+        .S(S5),
+        .Cout(cout5_cin6)
+    );
+
+    somador_1bit somador7(
+        .A(A6),
+        .B(B6),
+        .Cin(cout5_cin6),
+        .S(S6),
+        .Cout(cout6_cin7)
+    );
+
+    somador_1bit somador8(
+        .A(A7),
+        .B(B7),
+        .Cin(cout6_cin7),
+        .S(S7),
+        .Cout(Cout)
+    );
+
+endmodule

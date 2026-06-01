@@ -1,0 +1,49 @@
+module registrador8bits(
+	input [7:0] A,
+	input clk, clk10,
+	input en,
+	input botao,
+	output [7:0] LED
+);
+	flipflop_D flip0(
+	.d(A[0]), .clk(clk),	.rst_n(1'b1),	.en(en),	.q(LED[0])
+);
+	
+	flipflop_D flip1(
+	.d(A[1]), .clk(clk), .rst_n(1'b1), .en(en), .q(LED[1])
+);
+	flipflop_D flip2(
+	.d(A[2]), .clk(clk), .rst_n(1'b1), .en(en), .q(LED[2])
+);
+	flipflop_D flip3(
+	.d(A[3]), .clk(clk), .rst_n(1'b1), .en(en), .q(LED[3])
+);
+	flipflop_D flip4(
+	.d(A[4]), .clk(clk), .rst_n(1'b1), .en(en), .q(LED[4])
+);
+	flipflop_D flip5(
+	.d(A[5]), .clk(clk), .rst_n(1'b1), .en(en), .q(LED[5])
+);
+	flipflop_D flip6(
+	.d(A[6]), .clk(clk), .rst_n(1'b1), .en(en), .q(LED[6])
+);
+	flipflop_D flip7(
+	.d(A[7]), .clk(clk), .rst_n(1'b1), .en(en), .q(LED[7])
+);
+
+	wire nbtn;
+	wire pulso;
+	not not0(nbtn, btn);
+	assign LED[2] = pulso;
+	
+	debounce (.clock(clk10), .button(botao), .out(btn)
+	);
+	
+	edge_detector detector_borda(
+		.clk(clk), .btn(botao), .pulso(pulso)
+   );
+ 
+	contador contador1(
+	.clk(clk), .controle(pulso), .s1(LED[1]), .s0(LED[0])
+   );	
+		

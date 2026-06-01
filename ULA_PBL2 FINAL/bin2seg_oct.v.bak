@@ -1,0 +1,51 @@
+module bin2seg_oct(
+    input A, B, C,     // 3 bits de entrada (octal)
+    output a, b, c, d, e, f, g  // 7 segmentos
+);
+    // Negação dos bits para facilitar funções
+    wire nA, nB, nC;
+    not (nA, A);
+    not (nB, B);
+    not (nC, C);
+
+    // Segmento a
+    wire a1, a2;
+    and (a1, nA, nB, C);
+    and (a2, A, nB, nC);
+    or  (a, a1, a2);
+
+    // Segmento b
+    wire b1, b2;
+    and (b1, A, nB, C);
+    and (b2, A, B, nC);
+    or  (b, b1, b2);
+
+    // Segmento c
+    and (c, nA, B, nC);
+
+    // Segmento d
+    wire d1, d2, d3;
+    and (d1, nA, nB, C);
+    and (d2, A, nB, nC);
+    and (d3, A, B, C);
+    or  (d, d1, d2, d3);
+
+    // Segmento e
+    wire e1;
+    and (e1, A, nB);
+    or  (e, e1, C);
+
+    // Segmento f
+    wire f1, f2, f3;
+    and (f1, nA, B);
+    and (f2, nA, C);
+    and (f3, B, C);
+    or  (f, f1, f2, f3);
+
+    // Segmento g
+    wire g1, g2;
+    and (g1, nA, nB);
+    and (g2, A, B, C);
+    or  (g, g1, g2);
+
+endmodule

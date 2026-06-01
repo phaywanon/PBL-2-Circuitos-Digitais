@@ -1,0 +1,49 @@
+module mux_8_2(
+	input [7:0] ENT,
+	input [7:0] R,
+	input controle,
+	output [7:0] decisao
+);
+	
+	wire ncontrole;
+	not Not0(ncontrole, controle);
+	
+	//bit 0
+	and And00(f00, ENT[0], ncontrole);
+	and And01(f01, R[0], controle);
+	or Or0(decisao[0], f00, f01);
+	
+	//bit 1
+	and And10(f10, ENT[1], ncontrole);
+	and And11(f11, R[1], controle);
+	or Or1(decisao[1], f10, f11);
+	
+	//bit 2
+	and And20(f20, ENT[2], ncontrole);
+	and And21(f21, R[2], controle);
+	or Or2(decisao[2], f20, f21);
+	
+	//bit 3
+	and And30(f30, ENT[3], ncontrole);
+	and And31(f31, R[3], controle);
+	or Or3(decisao[3], f30, f31);
+	
+	//bit 4
+	and And40(f40, ENT[4], ncontrole);
+	and And41(f41, R[4], controle);
+	or Or4(decisao[4], f40, f41);
+	
+	//bit 5
+	and And50(f50, ENT[5], ncontrole);
+	and And51(f51, R[5], controle);
+	or Or5(decisao[5], f50, f51);
+	
+	//bit 6
+	and And60(f60, ENT[6], ncontrole);
+	and And61(f61, R[6], controle);
+	or Or6(decisao[6], f60, f61);
+	
+	//bit 7
+	and And70(f70, ENT[7], ncontrole);
+	and And71(f71, R[7], controle);
+	or Or7(decisao[7], f70, f71);

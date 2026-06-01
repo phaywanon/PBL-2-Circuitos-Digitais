@@ -1,0 +1,23 @@
+module byte2oct_display(
+    input [7:0] byte_in,
+    output [6:0] seg0, // centena
+    output [6:0] seg1, // dezena
+    output [6:0] seg2  // unidade
+);
+    // Display da esquerda = 0
+    bin2seg_structural d0(.A(1'b0), .B(1'b0), .C(byte_in[7]), .D(byte_in[6]),
+                           .a(seg0[6]), .b(seg0[5]), .c(seg0[4]), 
+                           .d(seg0[3]), .e(seg0[2]), .f(seg0[1]), .g(seg0[0]));
+
+    // Display do meio = high nibble
+    bin2seg_structural d1(.A(1'b0), .B(byte_in[5]), 
+                           .C(byte_in[4]), .D(byte_in[3]),
+                           .a(seg1[6]), .b(seg1[5]), .c(seg1[4]), 
+                           .d(seg1[3]), .e(seg1[2]), .f(seg1[1]), .g(seg1[0]));
+
+    // Display da direita = low nibble
+    bin2seg_structural d2(.A(1'b0), .B(byte_in[2]), 
+                           .C(byte_in[1]), .D(byte_in[0]),
+                           .a(seg2[6]), .b(seg2[5]), .c(seg2[4]), 
+                           .d(seg2[3]), .e(seg2[2]), .f(seg2[1]), .g(seg2[0]));
+endmodule

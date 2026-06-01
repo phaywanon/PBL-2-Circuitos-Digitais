@@ -1,0 +1,76 @@
+module bin2seg_structural(
+    input A, B, C, D,     // 4 bits de entrada
+    output a, b, c, d, e, f, g  // 7 segmentos
+);
+    // Negação dos bits para facilitar funções
+    wire nA, nB, nC, nD;
+    not (nA, A);
+    not (nB, B);
+    not (nC, C);
+    not (nD, D);
+
+    // Segmento a
+    wire a1, a2, a3, a4;
+    and (a1, nA, nB, nC, D);
+    and (a2, nA, B, nC, nD);
+    and (a3, A, nB, C, D);
+    and (a4, A, B, nC, D);
+    or  (a, a1, a2, a3, a4);
+
+    // Segmento b
+    wire b1, b2, b3, b4, b5, b6;
+    and (b1, nA, B, nC, D);
+    and (b2, nA, B, C, nD);
+    and (b3, A, nB, C, D);
+    and (b4, A, B, nC, nD);
+    and (b5, A, B, C, nD);
+    and (b6, A, B, C, D);
+    or  (b, b1, b2, b3, b4, b5, b6);
+
+    // Segmento c
+    wire c1, c2, c3, c4;
+    and (c1, nA, nB, C, nD);
+    and (c2, A, B, nC, nD);
+    and (c3, A, B, C, nD);
+    and (c4, A, B, C, D);
+    or  (c, c1, c2, c3, c4);
+
+    // Segmento d
+    wire d1, d2, d3, d4, d5, d6;
+    and (d1, nA, nB, nC, D);
+    and (d2, nA, B, nC, nD);
+    and (d3, nA, B, C, D);
+    and (d4, A, nB, C, nD);
+    and (d5, A, B, nC, D);
+    and (d6, A, B, C, nD);
+    or  (d, d1, d2, d3, d4, d5, d6);
+
+    // Segmento e
+    wire e1, e2, e3, e4, e5, e6;
+    and (e1, nA, nB, nC, D);
+    and (e2, nA, nB, C, D);
+    and (e3, nA, B, nC, nD);
+    and (e4, nA, B, nC, D);
+    and (e5, nA, B, C, D);
+    and (e6, A, nB, C, nD);
+    or  (e, e1, e2, e3, e4, e5, e6);
+
+    // Segmento f
+    wire f1, f2, f3, f4, f5;
+    and (f1, nA, nB, nC, D);
+    and (f2, nA, nB, C, nD);
+    and (f3, nA, nB, C, D);
+    and (f4, nA, B, C, D);
+    and (f5, A, B, nC, D);
+    or  (f, f1, f2, f3, f4, f5);
+
+    // Segmento g
+    wire g1, g2, g3, g4, g5;
+    and (g1, nA, nB, nC, nD);
+    and (g2, nA, nB, nC, D);
+    and (g3, nA, B, C, nD);
+    and (g4, A, B, nC, nD);
+    and (g5, A, B, C, D);
+    or  (g, g1, g2, g3, g4, g5);
+
+endmodule
