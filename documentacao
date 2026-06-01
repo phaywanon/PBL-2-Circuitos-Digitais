@@ -1,1 +1,1044 @@
+% abtex2-modelo-artigo.tex, v-1.9.2 laurocesar
+% Copyright 2012-2014 by abnTeX2 group at http://abntex2.googlecode.com/ 
+%
 
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% abnTeX2: Modelo de Artigo Acadêmico em conformidade com
+% ABNT NBR 6022:2003: Informação e documentação - Artigo em publicação 
+% periódica científica impressa - Apresentação
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+\documentclass[
+	% -- opções da classe memoir --
+	article,			% indica que é um artigo acadêmico
+	11pt,				% tamanho da fonte
+	oneside,			% para impressão apenas no verso. Oposto a twoside
+	a4paper,			% tamanho do papel. 
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE % títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	brazil,				% o último idioma é o principal do documento
+	sumario=tradicional
+	]{abntex2}
+
+
+% ---
+% PACOTES
+% ---
+
+% ---
+% Pacotes fundamentais 
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{nomencl} 			% Lista de simbolos
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+% ---
+\usepackage{amsmath}
+\usepackage{float}
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+		
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+% ---
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+
+\titulo{Universidade Estadual de Feira de Santana\\Departamento de Tecnologia\\MI - Projeto de Circuitos Digitais\\Tutor: Anfranserai Morais Dias\\
+\textbf{ULA de 8 Bits em FPGA}}
+\autor{Pedro Haywanon S. Araujo \and  Pedro Kruschewsky Lordelo}
+
+
+\date{}
+% ---
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={Modelo de artigo científico com abnTeX2},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{atigo científico}, 
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=blue,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+    	filecolor=magenta,      		% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ---
+% Altera as margens padrões
+% ---
+\setlrmarginsandblock{3cm}{3cm}{*}
+\setulmarginsandblock{3cm}{3cm}{*}
+\checkandfixthelayout
+% ---
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% Espaçamento simples
+\SingleSpacing
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+
+%---
+%
+% Se desejar escrever o artigo em duas colunas, descomente a linha abaixo
+% e a linha com o texto ``FIM DE ARTIGO EM DUAS COLUNAS''.
+% \twocolumn[    		% INICIO DE ARTIGO EM DUAS COLUNAS
+%
+%---
+% página de titulo
+\maketitle
+
+% resumo em português
+\begin{resumoumacoluna}
+Esse relatório descreve o desenvolvimento e a implementação de uma \textbf{ULA (Unidade Lógica Aritmética)} de 8 bits em \textbf{Verilog Estrutural}, utilizando o software \textit{Quartus} em uma placa FPGA MAX DE10-Lite. No documento, são apresentados os fundamentos teóricos de registradores, contadores e arquitetura digital aplicados ao projeto, assim como a descrição e o desenvolvimento das soluções adotadas para atender aos requisitos propostos. Há também a análise e simplificação do circuito, descrição dos módulos desenvolvidos, bem como os testes e simulações realizadas. O trabalho ressalta o uso de flip-flops, registradores e a introdução ao conceito de máquina de estados e serve como registro técnico do processo de concepção e implementação da ULA.
+ 
+ \vspace{\onelineskip}
+ 
+ \noindent
+ \textbf{Palavras-chaves}: ula. registradores. verilog.
+\end{resumoumacoluna}
+
+
+\textual
+
+
+\section{\textbf{INTRODUÇÃO}}
+\addcontentsline{toc}{section}{Introdução}
+
+
+As Unidades Lógicas e Aritméticas (ULAs) constituem blocos fundamentais dos processadores, responsáveis pela execução das operações matemáticas e lógicas que sustentam o funcionamento de praticamente todos os sistemas computacionais modernos. Em essência, a ULA é o núcleo da capacidade de processamento de uma CPU, pois nela ocorrem operações como soma, subtração, multiplicação, divisão e operações booleanas, que servem de base tanto para cálculos simples quanto para algoritmos complexos.
+
+Dando continuidade ao desenvolvimento iniciado no Problema~1, que envolveu uma ULA de 4~bits, este projeto teve como objetivo expandir sua arquitetura para 8~bits, explorando novas funcionalidades e o uso de memória. A implementação foi realizada em linguagem Verilog estrutural, utilizando o software \textit{Quartus} e a placa FPGA Intel MAX-10 como plataforma de teste. O protótipo desenvolvido foi projetado para realizar oito operações principais: quatro aritméticas - soma (A~+~B), subtração (A~--~B), multiplicação (A~$\times$~B) e divisão (A~$\div$~B) - e quatro lógicas - AND (A~\&~B), OR (A~|~B), XOR (A~\^{ }B) e NOT ($\sim$A). Além disso, foi incorporada uma entrada de \textit{Carry-In} para as operações de soma e subtração, e um conjunto de \textit{flags} (Overflow, Erro, Zero, \textit{Carry-Out} e Resto) para indicar as condições específicas de cada resultado.
+
+Outro aspecto importante do projeto foi a adoção da notação polonesa reversa (RPN - \textit{Reverse Polish Notation}), na qual os operandos são inseridos antes da operação desejada, seguindo a ordem A, B e depois o operador. Para possibilitar o funcionamento correto dessa estrutura, o projeto fez uso de máquinas de estados e contadores síncronos, garantindo o controle sequencial das etapas de entrada, processamento e exibição dos resultados.
+
+A ULA de 8 bits também foi projetada para exibir os resultados em diferentes bases numéricas - hexadecimal, decimal e octal - selecionadas por meio de chaves da placa. Essa funcionalidade amplia a compreensão do comportamento dos números em diferentes representações e destaca a importância da conversão entre bases no contexto dos sistemas digitais. As saídas foram exibidas em três displays de sete segmentos e armazenadas automaticamente no registrador A, permitindo que resultados anteriores fossem reutilizados em novas operações.
+
+Assim, o desenvolvimento deste projeto possibilitou a consolidação dos conhecimentos sobre registradores, contadores e circuitos combinacionais e sequenciais, além de reforçar a aplicação prática da linguagem Verilog na construção de arquiteturas digitais em FPGA. A implementação de uma ULA de 8 bits funcional, com suporte a múltiplas operações e modos de exibição, representa um passo significativo na formação dos estudantes em projeto de circuitos digitais.
+
+
+
+\section{\textbf{METODOLOGIA}}
+
+\subsection{\textbf{REFERENCIAL TEÓRICO}}
+
+\subsubsection {ÁLGEBRA BOOLEANA E CIRCUITOS LÓGICOS}
+O entendimento dos circuitos lógicos e da Álgebra \textbf{Booleana} foi obtido, principalmente, do livro \textit{Elementos de Eletrônica Digital} \cite{idoeta2012}. Esses circuitos são desenvolvidos com base em uma notação de estado binária, distribuída entre o 0 (nível lógico baixo) e o 1 (nível lógico alto). Nesse sentido, percebe-se que os níveis lógicos têm o potencial de produzir determinadas saídas com o uso de operações, sejam elas aritméticas ou \textbf{Booleanas}. Logo, é notável que existem apenas duas situações em cada variável da álgebra binária, e elas são opostas entre si.
+
+
+\subsubsection{PORTA AND}
+
+A função AND, ou função E, executa uma multiplicação booleana entre duas ou mais variáveis. A sua expressão resulta em nível lógico alto, se, e somente se, todos os bits estiverem em nível lógico alto, como é possível ver na sua tabela verdade (imagem \ref{fig:tabelaverdadeand}). A porta AND, ou de conjunção, utilizada na ULA, é representada através do símbolo presente na imagem \ref{fig:portaand}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{tv and.png}
+    \caption{Tabela verdade And. Fonte: Blogspot.com. 2025}
+    \label{fig:tabelaverdadeand}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{and.png}
+    \caption{Porta AND. Fonte: Autoria própria. 2025}
+    \label{fig:portaand}
+\end{figure}
+
+
+\subsubsection{PORTA OR}
+
+A função OR, ou função OU, executa uma soma booleana entre duas ou mais variáveis. A sua expressão resulta em nível lógico alto se pelo menos um bit estiver em nível lógico alto, como é possível ver na sua tabela verdade (imagem \ref{fig:tabelaverdadeor}). A porta OR, ou de disjunção, utilizada na ULA, é representada através do símbolo presente na imagem \ref{fig:portaor}.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{tv or.png}
+    \caption{Tablela verdade OR. Fonte: Blogspot.com. 2025}
+    \label{fig:tabelaverdadeor}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{or.jpeg}
+    \caption{Porta OR. Fonte: Autoria própria. 2025}
+    \label{fig:portaor}
+\end{figure}
+
+
+\subsubsection{PORTA NOT}
+
+A função NOT inverte o nível de tensão da saída, ou seja, se o nível lógico foi alto, a função produz saída de nível lógico baixo, e vice-versa, como é possível ver na sua tabela verdade (imagem \ref{fig:tabelaverdadenot}). A porta NOT, ou de negação, utilizada na ULA, é representada através do símbolo presente na imagem \ref{fig:portanot}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{tv not.png}
+    \caption{Tabela verdade NOT. Fonte: Blogspot.com. 2025.}
+    \label{fig:tabelaverdadenot}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{not.png}
+    \caption{Porta NOT. Fonte: Autoria própria. 2025}
+    \label{fig:portanot}
+\end{figure}
+
+
+\subsubsection{PORTA XOR}
+
+A função lógica XOR, ou OR exclusivo, é utilizada quando se deseja que a saída assuma nível lógico alto apenas nos casos em que as entradas são diferentes entre si, assim como é possível ver na sua tabela verdade (imagem \ref{fig:tabelaverdadexor}) . Portanto, a saída apresentará nível lógico alto quando o número de entradas em nível alto for ímpar. A porta XOR, utilizada na ULA, é representada através do símbolo presente na imagem \ref{fig:portaxor}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{tv xor.png}
+    \caption{Tabela verdade XOR. Fonte: Blogspot.com. 2025.}
+    \label{fig:tabelaverdadexor}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{xor.jpeg}
+    \caption{Porta XOR. Fonte: Autoria própria. 2025}
+    \label{fig:portaxor}
+\end{figure}
+
+
+\subsubsection{SOMADOR COMPLETO}
+
+"O Somador Completo é um circuito para efetuar a soma completa de uma coluna, considerando o transporte de entrada."\cite[pág.~231]{idoeta2012}. Em outras palavras, trata-se de um circuito digital que processa mais de uma variável, levando em conta tanto o \textit{Carry-In}, quanto o \textit{Carry-Out} da operação. Seu funcionamento baseia-se na propagação do \textit{Carry-Out} de uma operação como \textit{Carry-In} da operação subsequente. A representação do Somador Completo de 1 bit é apresentada na imagem \ref{fig:somador1bit}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{somador.png}
+    \caption{Somador Completo de 1 bit. Fonte: Autoria própria. 2025}
+    \label{fig:somador1bit}
+\end{figure}
+
+\subsubsection{SUBTRATOR COMPLETO}
+
+"O Subtrator Completo é um circuito que efetua a subtração completa de uma coluna, ou seja, considera o transporte de entrada proveniente da coluna anterior."\cite[pág.237]{idoeta2012}. Em outras palavras, trata-se de um circuito digital que processa mais de uma variável, levando em conta tanto o \textit{Borrow-In}, quanto o \textit{Borrow-Out} da operação. Seu funcionamento baseia-se na propagação do \textit{Borrow-Out} de uma operação como \textit{Borrow-In} da operação subsequente. A representação RTL do Subtrator Completo de 1 bit é apresentada na imagem \ref{fig:subtrator1bit}.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{subtrator.png}
+    \caption{Subtrator Completo de 1 bit. Fonte: Autoria própria. 2025}
+    \label{fig:subtrator1bit}
+\end{figure}
+
+\subsubsection{MULTIPLICADOR RECURSIVO}
+
+"A multiplicação aritmética, também denominada \textit{Matriz de Duplo Encadeamento}, consiste em um processo de geração de produtos parciais, obtidos por meio de portas \textit{AND} e somadores completos." \cite[pág.~243]{idoeta2012}. Em outras palavras, trata-se de um circuito digital que realiza a multiplicação de dois números binários a partir da soma sucessiva de produtos parciais, de forma análoga à operação em base decimal.
+
+No caso do multiplicador recursivo, esse processo é executado de forma sequencial, sendo controlado por uma máquina de estados finitos (FSM) sincronizada por um sinal de \textit{clock}. A cada ciclo, o circuito verifica um bit do multiplicador: se o bit for ‘1’, o multiplicando é somado ao resultado parcial acumulado. Em seguida, os registradores responsáveis pelo multiplicando e pelo multiplicador são deslocados, preparando o sistema para a próxima iteração. Após um número fixo de ciclos (oito, neste caso), o produto final é obtido no acumulador. A representação \textit{RTL} do Multiplicador Recursivo é apresentada na imagem \ref{fig:multiplicadorcircuito}.
+A representação \textit{RTL} do Multiplicador Recursivo ficou muito extensa para inclusão. Por esse motivo, sua lógica é apresentada no diagrama da figura \ref{fig:multiplicadorcircuito}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{DIAGRAMA MULTIPLICADOR.png}
+    \caption{Figura 11 - Multiplicador Recursivo. Fonte: Autoria própria. 2025}
+    \label{fig:multiplicadorcircuito}
+\end{figure}
+
+
+\subsubsection{DIVISOR}
+
+O processo de divisão binária é análogo ao de números decimais, no qual é necessário verificar se o divisor “cabe” no dividendo antes de realizar a subtração. Dessa forma, a implementação de uma divisão booleana requer o uso de subtratores completos entre as parcelas da divisão e multiplexadores para selecionar a saída apropriada conforme descrito em \textit{Sistemas Digitais: Princípios e Aplicações} \cite{tocci2000}. Assim como o multiplicador sequencial, a representação \textit{RTL} do Divisor ficou muito extensa, desta forma, sua lógica também está sendo apresentada no diagrama da figura \ref{fig:divisorcircuito}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{divisor.png}
+    \caption{Figura 12 - Divisor. Fonte: Autoria própria. 2025}
+    \label{fig:divisorcircuito}
+\end{figure}
+
+\subsubsection{MULTIPLEXADOR}
+
+"Os circuitos multiplex são utilizados nos casos em que necessitamos enviar um certo número de informações, contidas em vários canais, a um só canal." \cite[pág.372]{idoeta2012}. Ou seja, os multiplexadores, ou apenas MUX, são portas de comutação, responsáveis por escolher uma entre várias entradas e encaminhá-la para uma única saída de acordo com os sinais de seleção previamente definidos. Para exemplificar, o multiplexador 2:1 é o modelo mais simples, possuindo duas entradas de dados, uma linha de seleção e uma saída. A escolha da entrada a ser encaminhada para a saída depende exclusivamente do valor lógico aplicado ao sinal de seleção, como pode ser observada em sua tabela verdade na imagem \ref{fig:tabelaverdademux}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{tv mux.png}
+    \caption{Tabela verdade multiplexador. Fonte: Adaptado de ResearchGate (2018).}
+    \label{fig:tabelaverdademux}
+\end{figure}
+
+
+
+
+\subsubsection{FLIP-FLOP}
+Uma parte essencial do projeto é o uso de memória, o que não seria possível sem a utilização de flip-flops em sua estrutura. Dentre os principais tipos — RS, JK, T e D — foi empregado o flip-flop D, por ser o mais simples e previsível, apresentando apenas uma entrada e uma saída. Os flip-flops podem ser sensíveis à borda de subida ou à borda de descida do sinal de clock, dependendo da aplicação e do tipo de circuito utilizado. No caso do projeto atual, ambos foram implementados. Assim como a maior parte do referencial teórico desenvolvido especificamente para este projeto (ou seja, aquele que não foi utilizado na etapa anterior), esse conhecimento foi obtido a partir do livro \textit{Sistemas Digitais: Princípios e Aplicações} \cite[cap.~5]{tocci2000}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{flipflopd.png}
+    \caption{Flip-Flop D. Fonte: Build Eletronic Circuits. 2022.}
+    \label{fig:flipflopd}
+\end{figure}
+
+\subsubsection{REGISTRADORES}
+Em Verilog, os registradores são formados por flip-flops instanciados com o mesmo sinal de clock, de modo que cada bit de entrada corresponde à entrada D de um flip-flop. Os registradores são utilizados em toda a base do projeto, pois armazenam as informações de entrada e saída. Considerando que a saída deve ser reutilizada como entrada A, a necessidade do uso de registradores tornou-se evidente. O embasamento teórico desse componente foi obtido no livro \textit{Sistemas Digitais: Princípios e Aplicações} \cite[cap.~7]{tocci2000}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{registradorflipflopd.png}
+    \caption{Registrador com Flip-Flop D. Fonte: Endigital. 2025.}
+    \label{fig:registradorflipflop}
+\end{figure}
+
+\subsubsection{DEBOUNCE}
+O \textit{debounce} é um circuito destinado a eliminar os ruídos elétricos gerados pelo acionamento mecânico de botões, que podem causar múltiplas leituras indevidas. No projeto, foi implementado um \textit{debounce} digital com dois flip-flops D e lógica combinacional, garantindo que apenas uma transição estável do botão seja reconhecida pelo contador. O embasamento teórico foi obtido em \textit{Elementos de Eletrônica Digital} \cite[cap.~9]{idoeta2012}.
+
+\subsubsection{CONTADORES}
+Os contadores podem ser implementados a partir de flip-flops D conectados em série, de forma que a saída Q de um estágio alimenta a entrada D do próximo. A tabela verdade é definida de acordo com a sequência desejada para as próximas entradas. Na tabela verdade do projeto foi considerado, também, um controle que dirá se a entrada A virá das chaves da placa ou do resultado da operação anterior. O conhecimento relativo a esse tópico foi obtido a partir do livro \textit{Sistemas Digitais: Princípios e Aplicações} \cite[cap.~7]{tocci2000}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{contadorJK.png}
+    \caption{Contador com flip-flops JK. Fonte: Instituto Newton C. Braga.}
+    \label{fig:contadorjk}
+\end{figure}
+
+\subsubsection{DISPLAYS E BASES}
+A visualização do resultado em três displays de sete segmentos da placa, junto com a troca de base para decimal, hexadecimal e octal, era um ponto importante do projeto. Dessa forma, foi implementada uma espécie de \textit{BCD} (Binary Coded Decimal) para as três bases, permitindo a correta exibição de números provenientes das operações da ULA. 
+
+
+Cada base numérica possui sua própria forma de codificação e conversão. Para a base decimal, foi necessário converter o número binário de 8 bits em grupos de dígitos decimais, processo realizado por meio de divisões sucessivas por 10. Já para as bases hexadecimal e octal, a conversão é direta, pois essas bases são potências de dois, possibilitando o mapeamento de grupos de 4 e 3 bits, respectivamente.
+
+O circuito de decodificação foi projetado para gerar os sinais adequados aos displays de sete segmentos, de acordo com o valor e a base selecionada. O embasamento teórico foi obtido a partir de \textit{Sistemas Digitais: Princípios e Aplicações} \cite[cap.~9]{tocci2000} e \cite[cap.~5]{idoeta2012}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{displayde7segmentos.png}
+    \caption{Display de 7 segmentos na placa. Fonte: Circuit Fever. 2023.}
+    \label{fig:displaynaplaca}
+\end{figure}
+
+
+
+\section{\textbf{DESENVOLVIMENTO}}
+
+\subsection{\textbf{ULA}}
+
+Como o primeiro desenvolvimento do grupo consistiu em uma ULA de 4 bits, o presente projeto baseou-se em expandir essa estrutura para 8 bits. Além do aumento na largura dos operandos, foram solicitadas duas modificações principais: a implementação de um multiplicador recursivo — de forma que houvesse apenas um somador — e a adição da operação lógica NOT. Como nosso multiplexador já tinha uma combinação "sobrando" (111), seu encaixe foi sem problemas na nossa ULA.
+
+Além disso, foi implementada a \textit{flag} de resto, destinada a indicar a ocorrência de resto na operação de divisão. Embora essa informação já estivesse presente na saída do módulo de divisão de 4 bits do projeto anterior, a \textit{flag} específica não havia sido utilizada na versão anterior da ULA.
+
+
+
+\subsubsection{SOMADOR DE 8 BITS}
+
+O somador utilizado neste projeto mantém a mesma estrutura lógica do somador completo desenvolvido na ULA de 4 bits, apresentado no problema anterior. Ele foi expandido para 8 bits por meio da instanciação de quatro módulos adicionais do somador de 1 bit, conectados em cascata, ou seja, o \textit{Carry-Out} de cada estágio se torna o \textit{Carry-In} do estágio seguinte.
+
+\[
+S = A \oplus B \oplus C_{in} \quad \text{e} \quad C_{out} = AB + C_{in}(A \oplus B)
+\]
+
+A operação, portanto, é idêntica à versão de 4 bits, diferenciando-se apenas pela largura dos operandos e pela capacidade de representar resultados mais extensos.
+
+
+\subsubsection{SUBTRATOR DE 8 BITS}
+O subtrator utilizado neste projeto mantêm a mesma estrutura lógica do subtrator completo desenvolvido na ULA de 4 bits, apresentada no problema anterior. Ele foi expandido para 8 bits por meio da instanciação de quatro módulos adicionais do subtrator de 1 bit, conectados em cascata, ou seja, o \textit{Borrow-out} de cada estágio se torna o \textit{Borrow-In} do estágio seguinte.
+
+\[
+D = A \oplus B \oplus B_{in} \quad \text{e} \quad B_{out} = A'B + (A' \oplus B)B_{in}
+\]
+
+Logo, a operação é idêntica à versão de 4 bits, mudando apenas a quantidade de bits de entrada e, consequentemente, de saída.
+
+\subsubsection{MULTIPLICADOR DE 8 BITS}
+
+O multiplicador de 8 bits desenvolvido neste projeto adota uma abordagem \textbf{recursiva e sequencial}, em contraste com a estrutura totalmente combinacional baseada na \textit{Matriz de Duplo Encadeamento}. O controle do processo é realizado por uma \textbf{máquina de estados finitos (FSM)} sincronizada por um sinal de \textit{clock}, responsável por coordenar as etapas da multiplicação ao longo de sucessivos ciclos de operação.
+
+O circuito é composto por três registradores principais: o \textbf{multiplicando}, o \textbf{multiplicador} e o \textbf{acumulador de resultados}. Em cada ciclo de \textit{clock}, a FSM avalia o bit menos significativo do registrador do multiplicador (operando B). Caso esse bit seja igual a ‘1’, o valor do multiplicando é somado ao acumulador por meio de um \textbf{somador de 16 bits}, que é utilizado de forma recursiva — ou seja, o mesmo módulo de somador é reutilizado a cada iteração, evitando replicações desnecessárias de hardware. 
+
+Após a soma, ocorre o deslocamento dos registradores: o multiplicando é deslocado uma posição à esquerda (equivalente a uma multiplicação por 2), enquanto o multiplicador é deslocado uma posição à direita, simulando o avanço da operação no formato de “conta armada” binária. Esse processo se repete até que todos os 8 bits do multiplicador tenham sido processados.
+
+A sequência de iterações é controlada por um contador de 4 bits, que garante o número exato de ciclos de execução (oito, neste caso). Ao término da última iteração, o produto final — composto por até 16 bits — encontra-se completamente armazenado no registrador acumulador, representando o resultado da multiplicação. 
+
+Essa implementação sequencial, embora exija múltiplos ciclos de clock, proporciona uma redução significativa no uso de portas lógicas e somadores, além de favorecer uma melhor escalabilidade do projeto para larguras de palavra superiores.
+
+
+
+
+
+
+
+\subsubsection{DIVISOR DE 8 BITS}
+
+O divisor de 8 bits utilizado neste projeto mantém o mesmo princípio de funcionamento do divisor de 4 bits apresentado no problema anterior. A sua implementação foi expandida a partir da instanciação de módulos de \textbf{subtratores completos} e \textbf{multiplexadores} de 8 bits com seletor de 1 bit, seguindo o mesmo algoritmo de divisão sucessiva baseado na verificação do \textit{Borrow-Out}.
+
+O processo se repete de forma idêntica ao divisor de 4 bits: para cada iteração, o dividendo parcial é subtraído do divisor e, caso a subtração seja possível ($Borrow\text{-}Out = 0$), o bit correspondente do quociente é definido como 1; caso contrário, o quociente recebe o valor 0. Em seguida, um multiplexador seleciona, com base no sinal de \textit{Borrow-Out}, entre o resultado da subtração e o valor anterior do dividendo parcial, atualizando o resto e deslocando o próximo bit a ser processado. O bit mais significativo do dividendo vira o bit menos significativo do subtrator.
+
+Dessa forma, o circuito produz como saídas o quociente e o resto. No projeto anterior, o resto não foi utilizado; contudo, nesta versão, foi implementada uma \textit{flag} de resto, atendendo à recomendação feita em sala. Assim, um LED da placa é acionado sempre que a divisão resultar em um valor não inteiro, indicando a presença de resto na operação.
+
+\subsubsection{OPERAÇÕES LÓGICAS AND, OR E XOR}
+
+As operações lógicas \textit{AND, OR e XOR} em operandos de 8 bits foram realizadas bit a bit, assim como o Somador e o Subtrator. Essa implementação foi feita por meio da instanciação dos seus módulos de 1 bit (Figura~\ref{fig:portaand}, \ref{fig:portaor} e \ref{fig:portaxor}) oito vezes, formando o módulo de 8 bits. Cada instância processa um par de bits equivalentes das entradas, conforme demonstrado nas tabelas verdades apresentadas nas Figuras~\ref{fig:tabelaverdadeand}, \ref{fig:tabelaverdadeor} e \ref{fig:tabelaverdadexor}.
+
+\subsubsection{OPERAÇÃO LÓGICA NOT}
+
+A operação lógica \textit{NOT} em operandos de 8 bits foi realizada bit a bit, assim como o Somador e o Subtrator. Esta implementação foi feita por meio da instanciação do módulo \textit{NOT} de 1 bit (Figura~\ref{fig:portanot}) oito vezes, formando o módulo \textit{NOT} de 8 bits. Cada instância processa um par de bits equivalentes das entradas, conforme demonstrado na tabela verdade apresentada na Figura~\ref{fig:tabelaverdadenot}.
+
+   
+\subsubsection{MULTIPLEXADOR}
+
+O multiplexador da ULA principal é responsável por selecionar qual resultado das operações internas será encaminhado para a saída final. Ele recebe as saídas dos módulos de soma, subtração, multiplicação, divisão e das operações lógicas (\textit{AND}, \textit{OR}, \textit{XOR} e \textit{NOT}), controlando a escolha por meio de três bits de seleção: $E_2$, $E_1$ e $E_0$.
+
+A configuração das combinações dos bits de seleção é apresentada na Tabela~\ref{tab:selecaomux}. Nela, observa-se a inclusão da operação \textbf{NOT} na combinação anteriormente não utilizada (111), aproveitando integralmente o espaço de seleção disponível.
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+        \textbf{Seletores (E2 E1 E0)} & \textbf{Operação Selecionada} \\ \hline
+        000 & SOMA \\ \hline
+        001 & SUBTRAÇÃO \\ \hline
+        010 & MULTIPLICAÇÃO \\ \hline
+        011 & DIVISÃO \\ \hline
+        100 & AND \\ \hline
+        101 & OR \\ \hline
+        110 & XOR \\ \hline
+        111 & NOT \\ \hline
+    \end{tabular}
+    \caption{Configuração das chaves seletoras do multiplexador. Fonte: Autoria Própria (2025).}
+    \label{tab:selecaomux}
+\end{table}
+
+Dessa forma, o multiplexador garante que todas as operações da ULA possam ser selecionadas diretamente por meio das combinações dos três bits de controle, simplificando a lógica de escolha e evitando desperdício de entradas.
+
+\subsection{\textbf{FLAGS}}
+
+As \textit{flags} são indicadores responsáveis por sinalizar condições específicas que ocorrem após a execução de uma operação. No projeto, cada flag acende um LED distinto da placa, representando visualmente o estado do sistema:
+
+\begin{itemize} 
+    \item A flag \textbf{Zero} acende o LED \texttt{PIN\_A8};
+    \item A flag \textbf{Overflow (OF)} acende o LED (\texttt{PIN\_A9};
+    \item A flag \textbf{Carry Out (C\textit{out})} acende o LED \texttt{PIN\_A10};
+    \item A flag \textbf{Erro} acende o LED \texttt{PIN\_B10};
+    \item A flag \textbf{Resto} acende o LED \texttt{PIN\_D13}.
+\end{itemize}
+
+Os tópicos a seguir descrevem detalhadamente as condições que provocam o acionamento de cada flag.
+
+
+\subsubsection{ZERO}
+
+A flag \textbf{Zero} é ativada sempre que o resultado de uma operação aritmética ou lógica for igual a zero. Sua implementação é feita por meio de uma operação \textit{NOR} entre todos os bits de saída, de modo que o sinal é ativado somente quando todos os bits resultantes estiverem em nível lógico baixo. 
+
+
+\subsubsection{\textit{OVERFLOW (OF)}}
+
+A flag \textbf{Overflow (OF)} foi desenvolvida para indicar quando o resultado de uma operação aritmética ultrapassa a capacidade de representação de \textbf{8 bits}. Quando essa condição ocorre, o LED correspondente é acionado, sinalizando que houve um transbordamento no resultado — ou seja, o valor obtido não pode ser totalmente representado dentro do intervalo permitido para o barramento de 8 bits.
+
+Com a flag de overflow ativada, o sistema exibe 255 no display. Assim, independente do resultado da operação - que seja acima de 8 bits - o display vai apresentar apenas o 255 e o LED correspondente ao overflow aceso.
+
+
+\subsubsection{\textit{CARRY-OUT} (COUT)}
+
+O sinal \textit{Carry-Out} é utilizado para indicar quando ocorre um estouro na capacidade de um somador, ou seja, quando o resultado ultrapassa o número máximo que pode ser representado com \textbf{8 bits}. No caso do subtrator, o sinal análogo é chamado de \textit{Borrow-Out}, e representa a ocorrência de um empréstimo durante a operação \href{https://www.auhd.edu.ye/upfiles/elibrary/Azal2020-01-22-12-16-48-75016.pdf}{MANO, 2012}.
+
+Dessa forma, a flag de \textit{Carry-Out} é acionada quando o somador gera um resultado que exige um bit adicional de representação (ou seja, um nono bit), ou quando o subtrator conclui uma operação que demanda um empréstimo. Esse sinal é aproveitado internamente pelo multiplexador e corresponde ao bit $R_8$, representando o nono bit de saída tanto no somador quanto no subtrator.
+
+
+\subsubsection{ERRO}
+
+A flag \textbf{Erro} foi projetada para sinalizar a ocorrência de uma divisão por zero. Para isso, o módulo responsável verifica se todos os bits do operando $B$ estão em nível lógico baixo, utilizando uma combinação de portas \textit{AND} e \textit{NOT}. Caso o divisor seja igual a zero, a flag é ativada, acendendo o LED correspondente e informando imediatamente ao usuário a presença de uma condição inválida. Essa detecção previne falhas lógicas e assegura maior confiabilidade ao sistema durante as operações.
+
+
+\subsubsection{RESTO}
+
+A flag \textbf{Resto} tem a função de indicar quando o resultado de uma divisão não é exato. Para isso, o módulo identifica primeiro se a operação escolhida no multiplexador é a de divisão. Em seguida, todos os bits do sinal de resto gerado pelo módulo da divisão são analisados — se pelo menos um deles for 1, significa que houve resto na operação. Nesse caso, o LED da flag é aceso, mostrando visualmente que o resultado não foi uma divisão exata. Essa verificação é simples, mas ajuda bastante a entender o comportamento do circuito durante os testes, especialmente quando se trabalha com números que não dividem de forma inteira.
+
+\subsection{\textbf{CONTADOR}}
+
+O contador é o responsável por controlar o funcionamento sequencial do projeto, atuando como uma espécie de “cérebro” que determina a ordem e o momento em que cada módulo deve ser ativado. Seus pulsos de clock comandam a transição de estados, habilitando os registradores e sincronizando o fluxo de dados entre eles e a ULA.
+
+O contador foi implementado a partir da combinação de dois \textbf{flip-flops tipo D}, conectados de forma a produzir uma contagem crescente. Dessa forma, suas saídas correspondem aos estados de contagem (00, 01, 10 e 11), como é possível ver na tabela \ref{tab:tabelaverdadecontador}, utilizados como variáveis de controle para as demais partes do circuito. Esses estados foram analisados em um \textbf{Mapa de Karnaugh} a fim de determinar, de forma simplificada, quais sinais de habilitação (\textit{enable}) deveriam ser ativados em cada etapa do ciclo de operação.
+
+O contador é sensível à borda de subida do pulso de clock, o que significa que a mudança de estado ocorre no momento em que o sinal transita de nível lógico baixo para alto. Como o clock foi associado ao botão da placa — que possui nível lógico padrão alto — a contagem é atualizada apenas ao final do acionamento, garantindo que o sistema não avance de estado antes de acontecer o registro.
+
+
+Para o correto funcionamento do projeto, foi necessário implementar um controle adicional no contador, uma vez que o sistema oferece duas formas de definir o valor do operando $A$:
+\begin{itemize}
+    \item por meio das \textbf{chaves de entrada}, inseridas manualmente pelo usuário;
+    \item ou pela \textbf{realimentação do resultado da operação anterior}, permitindo reutilizar a saída da ULA como nova entrada.
+\end{itemize}
+
+Esse controle é realizado por meio de uma chave seletora, cuja posição define qual fonte de dados será utilizada. Assim, o contador coordena tanto a leitura e o carregamento dos registradores quanto o envio dos operandos à ULA, garantindo a execução ordenada e sincronizada de todo o processo.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+        \textbf{Controle} & \textbf{$S_1$} & \textbf{$S_0$} & \textbf{$S_1'$} & \textbf{$S_0'$} \\ \hline
+        0 & 0 & 0 & 0 & 1 \\ \hline
+        0 & 0 & 1 & 1 & 0 \\ \hline
+        0 & 1 & 0 & 1 & 1 \\ \hline
+        0 & 1 & 1 & 0 & 0 \\ \hline
+        1 & 0 & 0 & 0 & 1 \\ \hline
+        1 & 0 & 1 & 1 & 0 \\ \hline
+        1 & 1 & 0 & 1 & 1 \\ \hline
+        1 & 1 & 1 & 0 & 0 \\ \hline
+    \end{tabular}
+    \caption{Tabela verdade do contador com controle. Fonte: Autoria Própria. 2025.}
+    \label{tab:tabelaverdadecontador}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{contadorpassos.png}
+    \caption{Passos do contador. Fonte: Autoria própria. 2025.}
+    \label{fig:placeholder}
+\end{figure}
+
+
+\subsubsection*{Mapas de Karnaugh e funções simplificadas}
+
+Observando a Tabela~\ref{tab:tabelaverdadecontador}, as funções dos próximos estados resultantes são:
+
+\[
+S_0' = \overline{S_0}, \qquad
+S_1' = S_1 \oplus S_0.
+\]
+
+Note-se que o bit de \textit{controle} não altera as saídas simplificadas: os K-maps para \(\textit{controle}=0\) e \(\textit{controle}=1\) são idênticos, ou seja, as expressões finais são independentes do sinal de controle.
+
+
+
+\vspace{6pt}
+\noindent\textbf{Mapa de Karnaugh — \(S_0'\)}:
+
+\begin{center}
+\begin{tabular}{c|cc}
+\multicolumn{1}{c}{} & \multicolumn{2}{c}{\textbf{Controle (C)}} \\
+\textbf{S1 S0} & 0 & 1 \\ \hline
+00 & 1 & 1 \\
+01 & 0 & 0 \\
+11 & 0 & 0 \\
+10 & 1 & 1 \\
+\end{tabular}
+\end{center}
+
+Do mapa acima conclui-se que \(S_0'= \overline{S_0}\).
+
+\vspace{6pt}
+\noindent\textbf{Mapa de Karnaugh — \(S_1'\)}:
+
+\begin{center}
+\begin{tabular}{c|cc}
+\multicolumn{1}{c}{} & \multicolumn{2}{c}{\textbf{Controle (C)}} \\
+\textbf{S1 S0} & 0 & 1 \\ \hline
+00 & 0 & 0 \\
+01 & 1 & 1 \\
+11 & 0 & 0 \\
+10 & 1 & 1 \\
+\end{tabular}
+\end{center}
+
+Do mapa acima observa-se que \(S_1'\) é 1 exatamente quando \(S_1\neq S_0\), portanto
+\[
+S_1' = S_1 \oplus S_0 = S_1\overline{S_0} + \overline{S_1}S_0.
+\]
+
+
+
+
+\subsection{\textbf{REGISTRADORES}}
+
+No projeto, foram utilizados registradores para armazenar temporariamente as entradas e saídas da ULA. Cada registrador possui número de flip-flops compatível com a largura de dados que manipula:
+
+\begin{itemize}
+    \item Registradores de entrada A e B, e registrador de saída R: 8 bits cada.
+    \item Registrador de seleção de operação: 3 bits (para as 8 operações da ULA).
+    \item Registrador de \textit{Carry-In} da soma/subtração: 1 bit.
+    \item Registrador de seleção da base de visualização do resultado: 2 bits.
+\end{itemize}
+
+Os flip-flops dos registradores foram projetados com sensibilidade à \textbf{borda de descida} do clock, enquanto os flip-flops do contador respondem à \textbf{borda de subida}. Essa escolha evita conflitos durante a transição de estados e garante que cada operação seja registrada na ordem correta.  
+
+Como o clock está associado ao botão da placa, cujo nível lógico padrão é alto, o processamento ocorre sequencialmente: o registrador captura o valor necessário no momento correto, o contador avança, e assim por diante, assegurando o correto funcionamento do sistema RPN.
+
+Cada registrador recebe sinais de enable derivados das saídas do contador, de forma que só seja atualizado no instante correto. A ativação dos registradores segue a seguinte lógica:
+
+\begin{itemize}
+    \item Estado 00: Registrador A e registrador de \textit{Carry-In} ativos.
+    \item Estado 01: Registrador B ativo.
+    \item Estado 10: Registrador de operação e registrador de seleção da base de visualização ativos.
+    \item Estado 11: Registrador R (resultado) ativo, armazenando a saída final da ULA.
+\end{itemize}
+
+Dessa forma, o sistema assegura que nenhum registrador seja sobrescrito indevidamente e que os dados fluam corretamente pelo RPN, permitindo a execução ordenada das operações da ULA.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{REGcomcontador.png}
+    \caption{Passos do contador com a habilitação dos registradores. Fonte: Autoria própria. 2025.}
+    \label{fig:contadorereg}
+\end{figure}
+
+\subsection{\textbf{\textit{Reverse Polish Notation} - RPN}}
+
+O sistema de execução em notação polonesa reversa (RPN) implementado neste projeto organiza o fluxo de dados de forma sequencial, garantindo que as operações da ULA sejam realizadas corretamente e que os resultados sejam armazenados nos registradores apropriados antes de serem exibidos no display. O coração do RPN é que primeiro são colocados os operandos ($A$ e $B$), depois a operação desejada, para então confirmar a conta. Logo, a ordem importa para a notação.
+
+A cada passo do contador, os registradores recebem permissões (\textit{enable}) específicas para capturar ou manter valores:
+
+\begin{itemize}
+    \item Estado 00: captura do operando $A$ e do \textit{Carry-In} da soma/subtração.
+    \item Estado 01: captura do operando $B$.
+    \item Estado 10: captura da seleção da operação e da base de visualização.
+    \item Estado 11: execução da operação na ULA, armazenamento do resultado no registrador $R$ e atualização da saída para o display.
+\end{itemize}
+
+Dessa forma, o fluxo em RPN garante que cada operação utilize operandos já registrados e que a ULA seja acionada apenas quando os dados necessários estiverem disponíveis. A realimentação da saída da ULA permite que o resultado de uma operação anterior seja reutilizado como operando $A$, quando desejado, tornando o sistema flexível e compatível com cálculos encadeados.
+
+O contador atua como controlador central, sincronizando os estados de habilitação (\textit{enable}) dos registradores e assegurando que nenhuma operação seja sobrescrita ou executada fora de ordem. Essa estratégia evita conflitos de borda de clock e mantém a integridade do processamento sequencial.
+
+Em resumo, o módulo RPN funciona como o elo entre o usuário, os registradores e a ULA, definindo o ritmo de execução das operações e a ordem correta de manipulação dos dados.
+
+
+\subsection{\textbf{DISPLAY DE 7 SEGMENTOS}}
+
+Para a exibição dos resultados, foram utilizados três displays de sete segmentos disponíveis na placa FPGA. Dessa forma, o sistema consegue representar números de até três dígitos nas bases decimal, octal e hexadecimal. O limite de exibição é, portanto, \textbf{255} em decimal, \textbf{377} em octal e \textbf{FF} em hexadecimal. Qualquer valor superior a esses limites excede a capacidade de representação dos 8 bits da ULA, fazendo com que o display permaneça travado no valor máximo da base selecionada e o \textit{flag} de \textit{overflow} seja ativado nos LEDs indicadores da placa.
+
+A seleção da base de visualização é realizada no mesmo momento da escolha da operação, por meio de duas chaves de controle. As combinações possíveis são:
+
+\begin{itemize}
+    \item 00 - Decimal
+    \item 01 - Hexadecimal
+    \item 10 - Octal
+    \item 11 - Display apagado
+\end{itemize}
+
+\subsubsection{HEXADECIMAL}
+
+A exibição dos resultados em formato hexadecimal (base 16) foi a mais direta de implementar, pois essa base é um múltiplo exato de 2, coincidindo com a estrutura binária interna dos dados. Assim, foi implementado um sistema de \textbf{BCH (Binary Coded Hexadecimal)}, em que cada grupo de quatro bits (\textit{nibble}) é convertido diretamente em um símbolo hexadecimal, de 0 a F.
+
+Cada um dos três displays é responsável por um nibble do resultado de 8 bits da ULA — o que significa que dois deles são utilizados efetivamente, e o terceiro permanece apagado para resultados inferiores a 256. A entrada do módulo de exibição hexadecimal é a própria saída da ULA, que é separada bit a bit em dois blocos de quatro bits e convertida em dígitos hexadecimais.
+
+Cada segmento é ativado conforme a combinação binária correspondente ao símbolo hexadecimal desejado (0–F) por meio de um módulo de \textbf{conversão binário–hexadecimal}, cuja lógica é definida por tabela verdade (tabela \ref{tab:display_hex}) e simplificada pelos \textbf{Mapas de Karnaugh} de cada segmento do display. Essa abordagem garante que a conversão e a exibição ocorram de forma totalmente paralela e síncrona com o restante do sistema. 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c c c c|c c c c c c c|}
+    \hline
+    \textbf{Entrada (HEX)} & D & C & B & A & a & b & c & d & e & f & g \\ \hline
+    0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\ 
+    1 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 1 & 1 \\ 
+    2 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 \\ 
+    3 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 \\ 
+    4 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\ 
+    5 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 0 \\ 
+    6 & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\ 
+    7 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\ 
+    8 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 
+    9 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\ 
+    A & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\ 
+    B & 1 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\ 
+    C & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 1 \\ 
+    D & 1 & 1 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\ 
+    E & 1 & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 \\ 
+    F & 1 & 1 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 0 \\ \hline
+    \end{tabular}
+\caption{Tabela verdade do decodificador hexadecimal para display de 7 segmentos (ânodo comum).}
+\label{tab:display_hex}
+\end{table}
+
+
+\subsubsection{OCTAL}
+
+A exibição em base octal (base 8) foi implementada para representar o resultado em três dígitos, já que cada dígito octal corresponde a três bits binários. Assim, os 8 bits de saída são agrupados em três conjuntos (2+3+3), sendo o primeiro completado com zero à esquerda quando necessário.  
+
+O modo de fazer foi parecido no hexadecimal e no octal, visto a simplicidade deles. Cada grupo é então convertido para o respectivo símbolo octal (0–7) por meio de um módulo de \textbf{conversão binário–octal}, cuja lógica é definida por tabela verdade (tabela \ref{tab:display_octal}) e simplificada pelos \textbf{Mapas de Karnaugh} de cada segmento do display.  
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c c c|c c c c c c c|}
+    \hline
+    \textbf{Entrada (OCT)} & C & B & A & a & b & c & d & e & f & g \\ \hline
+    0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\ 
+    1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 1 & 1 \\ 
+    2 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 \\ 
+    3 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 \\ 
+    4 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\ 
+    5 & 1 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 0 \\ 
+    6 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\ 
+    7 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\ \hline
+    \end{tabular}
+\caption{Tabela verdade do decodificador octal para display de 7 segmentos (ânodo comum).}
+\label{tab:display_octal}
+\end{table}
+
+
+
+\subsubsection{DECIMAL}
+
+
+A exibição em base decimal foi a parte mais trabalhosa do projeto, pois exigiu converter o número binário de 8 bits (saída da ULA) para o formato \textbf{BCD (Binary Coded Decimal)} antes da decodificação nos displays de sete segmentos. Para isso, implementei um módulo estrutural baseado no algoritmo \textbf{Double Dabble} (\textit{Shift-and-Add-3}), construído totalmente a partir de lógica combinacional, sem o uso de atribuições diretas.
+
+O processo é dividido em oito estágios, cada um responsável por processar um bit da entrada, do mais significativo ao menos significativo. Em cada estágio, três etapas ocorrem: primeiro, cada dígito parcial (centena, dezena e unidade) é comparado com 5 pelo módulo \texttt{comp5\_structural}. Quando o valor é maior ou igual, o módulo \texttt{add3\_cond\_structural} soma 3 a esse dígito; em seguida, os bits são deslocados à esquerda e o próximo bit do número binário é inserido na unidade.
+
+Esse procedimento é realizado pelo módulo \texttt{double\_dabble\_8bits\_structural}, formado por oito instâncias de \texttt{double\_dabble\_stage\_structural}. As saídas intermediárias (\texttt{stageN\_c}, \texttt{stageN\_d} e \texttt{stageN\_u}) representam as centenas, dezenas e unidades em cada estágio. Após o último, os três dígitos correspondem exatamente à versão decimal do número binário original.
+
+Por fim, os três dígitos BCD são convertidos para sinais de controle dos displays de sete segmentos pelo módulo \texttt{bin2seg\_structural}, que implementa as expressões lógicas simplificadas de cada segmento (a–g). O resultado final é exibido nos três displays da FPGA, correspondendo às posições de centena, dezena e unidade.
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c c c c|c c c c c c c|}
+    \hline
+    \textbf{Entrada (DEC)} & D & C & B & A & a & b & c & d & e & f & g \\ \hline
+    0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\ 
+    1 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 1 & 1 \\ 
+    2 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 \\ 
+    3 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 \\ 
+    4 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\ 
+    5 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 0 \\ 
+    6 & 0 & 1 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\ 
+    7 & 0 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\ 
+    8 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 
+    9 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\ \hline
+    \end{tabular}
+\caption{Tabela verdade do decodificador decimal para display de 7 segmentos (ânodo comum).}
+\label{tab:display_dec}    
+\end{table}
+
+\section{\textbf{DIAGRAMA DE ALTO NÍVEL}}
+
+
+A figura \ref{fig:diagrama_main} apresenta o diagrama de blocos de alto nível do sistema completo, correspondente ao módulo \texttt{main} do projeto. Este diagrama ilustra a interconexão de todos os componentes principais, desde as entradas até as saídas, e demonstra o fluxo de dados da arquitetura RPN implementada. O sistema é dividido quatro partes principais, que refletem a estrutura do módulo \texttt{main} e suas sub-instâncias:
+\begin{itemize}
+    \item \textbf{Entradas e Controle de RPN: } Este bloco recebe as entradas, como o \texttt{clk}(clock) principal, o \texttt{rst} (reset) sendo esses dois controlados pelos botoes da placa. O pulso que sai dos botões passa pelo módulo \texttt{debounce} para filtrar ruídos e gerar como saída um sinal limpo, que por sua vez é utilizado como clock para o \texttt{contador}, que atua como a Máquina de Estados Finitos (FSM) de 4 estados que gerencia o RPN. As saídas deste contador (\texttt{s0}, \texttt{s1}) são então decodificadas para gerar os sinais de habilitação (\textit{enableA, enableB, enableOP, enableR}) que funcionam para liberar os registradores armazenarem os operandos, operação e resultado.
+
+    \item \textbf{Armazenamento Interno:} Este bloco é composto por um conjunto de registradores que armazenam os operandos, a operação, as chaves seletoras do multiplexador das bases e o \textit{Carry-in} (\textit{Cin}): \texttt{registrador\_A} (Operando A), \texttt{registrador\_B} (Operando B), \texttt{registrador\_OP} (Código da Operação), \texttt{registrador\_base} (Seleção de Base) e \texttt{registrador\_do\_CIN} (Carry-In). A entrada de cada registrador é ativada sequencialmente pelos sinais \texttt{enable} vindos do contador. 
+
+    \item \textbf{Unidade de Processamento (ULA):} O núcleo do projeto, onde acontecem todas as operações. Ele recebe os operandos armazenados (registradorA, registradorB), o \texttt{wireCIN}, os seletores da operação (registradorOP) e os sinais de controle do multiplicador (clk, rst, start\_mult). A ULA realiza a operação escolhida pelo usuário e gera como saída (registradorR) o resultado da mesma, que é então enviada para o registrador de saída.
+
+    \item \textbf{Saídas e Visualização:} O resultado final, armazenado no \texttt{registrador\_R} e disponível no fio \texttt{R}, é enviado ao \texttt{display\_manager} para a conversão de base (Decimal, Hexadecimal ou Octal) e exibição nos displays de sete segmentos (SEG0, SEG1, SEG2). Simultaneamente, as saídas de flag da ULA (\textit{LEDZ, LEDE, LEDOV, LEDCARRY e LEDRES}.) são conectadas diretamente aos LED para fornecer feedback visual ao usuário sobre o estado da operação.
+\end{itemize}
+
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{diagrama_main.png}
+    \caption{Diagrama de alto nível. Fonte: Autoria própria. 2025}
+    \label{fig:diagrama_main}
+\end{figure}
+
+
+\section{\textbf{RESULTADOS E DISCUSSÕES}}
+
+Para avaliar a eficiência dos módulos desenvolvidos, foram realizados testes com diferentes combinações de entradas. Esses testes permitem verificar o correto funcionamento de determinado módulo em condições variadas e garantir que as flags associadas sejam acionadas corretamente. Dessa forma, é possível analisar o resultado dos testes usando a função \textit{Simulation} do \textit{Quartus}, que gera uma simulação das saídas com determinadas entradas.
+
+\subsection{\textbf{TESTES}}
+
+\subsubsection{MÓDULO SOMADOR DE 8 BITS NA ULA}
+
+Os testes realizados para validar o funcionamento da operação aritmética de soma de 8 bits estão apresentados a seguir. Cada operação foi analisada nas bases decimal, octal e hexadecimal, destacando o acionamento das flags \textit{Zero}, \textit{Carry-Out} e \textit{Overflow} quando aplicável.
+
+\begin{itemize}
+    \item \texttt{00000000 (0)} + \texttt{00000000 (0)} $\rightarrow$ Decimal: 0, Octal: 0, Hex: 0;  
+    *(Flag Zero);
+    
+    \item \texttt{11111111 (255)} + \texttt{11111111 (255)} $\rightarrow$ Decimal: 254, Octal: 376, Hex: 0FE;  
+    *(Flags Carry-Out e Overflow);
+    
+    \item \texttt{00101100 (44)} + \texttt{10101011 (171)} $\rightarrow$ Decimal: 215, Octal: 327, Hex: 0D7;
+    
+    \item \texttt{00100000 (32)} + \texttt{00000010 (2)} + Carry-in $\rightarrow$ Decimal: 35, Octal: 43, Hex: 23;
+\end{itemize}
+
+Os testes foram executados utilizando a ferramenta \textit{Simulation} do \textit{Quartus}, confirmando o comportamento esperado da operação aritmética de soma. Em todas as simulações, os resultados foram coerentes com os valores previstos e as flags foram acionadas corretamente.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{testesoma.png}
+    \caption{Testes da operação de soma de 8 bits. Fonte: Autoria própria. 2025.}
+    \label{fig:testesomador}
+\end{figure}
+
+
+
+
+\subsubsection{MÓDULO SUBTRATOR DE 8 BITS NA ULA}
+
+Os testes realizados para validar o funcionamento da operação aritmética de subtração de 8 bits estão apresentados a seguir. Cada operação foi analisada nas bases decimal, octal e hexadecimal, destacando o acionamento das flags \textit{Zero}, \textit{Borrow-Out} e \textit{Overflow} quando aplicável.
+
+\begin{itemize}
+    \item \texttt{00000000 (0)} - \texttt{11111111 (255)} $\rightarrow$ Decimal: 1, Octal: 1, Hex: 1;  
+    *(Flags Borrow-Out e Overflow);
+    
+    \item \texttt{10101010 (170)} - \texttt{10101010 (170)} $\rightarrow$ Decimal: 0, Octal: 0, Hex: 0;  
+    *(Flag Zero);
+    
+    \item \texttt{11100010 (226)} - \texttt{01010001 (81)} $\rightarrow$ Decimal: 145, Octal: 221, Hex: 91;
+    
+    \item \texttt{00001100 (12)} - \texttt{00000101 (5)} - Borrow-in $\rightarrow$ Decimal: 6, Octal: 6, Hex: 6;
+\end{itemize}
+
+Os testes foram executados utilizando a ferramenta \textit{Simulation} do \textit{Quartus}, confirmando o comportamento esperado da operação aritmética de subtração. Os resultados corresponderam aos valores previstos, e as flags responderam adequadamente às condições de cada caso.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{testesubtrator.png}
+    \caption{Testes da operação de subtração de 8 bits. Fonte: Autoria própria. 2025.}
+    \label{fig:testesubtrator}
+\end{figure}
+
+
+
+\subsubsection{MÓDULO MULTIPLICADOR DE 8 BITS NA ULA}
+
+Os testes realizados para validar o funcionamento da operação aritmética de multiplicação de 8 bits estão apresentados a seguir. Cada operação foi analisada nas bases decimal, octal e hexadecimal, destacando o acionamento das flags \textit{Zero} e \textit{Overflow} quando aplicável.
+
+\begin{itemize}
+    \item \texttt{00000000 (0)} ~$\times$~ \texttt{11111111 (255)} $\rightarrow$ Decimal: 0, Octal: 0, Hex: 0;  
+    *(Flag Zero);
+    
+    \item \texttt{00001111 (15)} ~$\times$~ \texttt{00010100 (20)} $\rightarrow$ Decimal: 255, Octal: 377, Hex: 0FF;  
+    *(Flag Overflow);
+    
+    \item \texttt{00010000 (16)} ~$\times$~ \texttt{00001100 (12)} $\rightarrow$ Decimal: 192, Octal: 300, Hex: 0C0;
+\end{itemize}
+
+Como o multiplicador implementado é do tipo \textbf{sequencial recursivo}, seu funcionamento ocorre ao longo de múltiplos ciclos de \textit{clock}, diferentemente das operações puramente combinacionais. Dessa forma, a validação dos resultados foi realizada por meio da observação dos sinais internos e das saídas registradas a cada iteração do processo de multiplicação. 
+
+Os testes confirmaram que o produto final é obtido corretamente após as oito iterações previstas, com a \textit{flag Zero} sendo ativada para resultados nulos e a \textit{flag Overflow} indicando corretamente quando o resultado ultrapassa o limite de 8 bits. Assim, o comportamento do módulo foi considerado coerente com o esperado, apresentando estabilidade e precisão nos cálculos em ambiente de simulação.
+
+
+
+
+
+\subsubsection{MÓDULO DIVISOR DE 8 BITS NA ULA}
+
+Os testes realizados para validar o funcionamento da operação aritmética de divisão de 8 bits estão apresentados a seguir. Cada operação foi analisada nas bases decimal, octal e hexadecimal, destacando o acionamento das flags \textit{Erro}, \textit{Zero} e \textit{Resto} quando aplicável.
+
+\begin{itemize}
+    \item \texttt{00000000 (0)} ~$\div$~ \texttt{00000000 (0)} $\rightarrow$ Decimal: 255, Octal: 377, Hex: FF;  
+    *(Flag Erro);
+    
+    \item \texttt{00000000 (0)} ~$\div$~ \texttt{00010100 (20)} $\rightarrow$ Decimal: 0, Octal: 0, Hex: 0;  
+    *(Flag Zero);
+    
+    \item \texttt{00010000 (16)} ~$\div$~ \texttt{00001100 (12)} $\rightarrow$ Decimal: 1, Octal: 1, Hex: 1;  
+    *(Flag Resto);
+    
+    \item \texttt{11001000 (200)} ~$\div$~ \texttt{00000100 (4)} $\rightarrow$ Decimal: 50, Octal: 62, Hex: 32;
+\end{itemize}
+
+Os testes foram executados utilizando a ferramenta \textit{Simulation} do \textit{Quartus}, confirmando o comportamento esperado da operação de divisão. As flags foram ativadas corretamente conforme as condições de erro, zero e resto.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{testedivisor.png}
+    \caption{Testes da operação de divisão de 8 bits. Fonte: Autoria própria. 2025.}
+    \label{fig:testediv}
+\end{figure}
+
+
+\subsubsection{MÓDULO OPERAÇÃO AND DE 8 BITS NA ULA}
+
+Os testes realizados para validar o funcionamento da operação lógica \textbf{AND} de 8 bits estão apresentados a seguir. Cada operação foi analisada nas bases decimal, octal e hexadecimal, destacando o acionamento da flag \textit{Zero} quando o resultado é nulo.
+
+\begin{itemize}
+    \item \texttt{00000000 (0)} \textbf{AND} \texttt{00000000 (0)} $\rightarrow$ Decimal: 0, Octal: 0, Hex: 0;  
+    *(Flag Zero);
+    
+    \item \texttt{01010101 (85)} \textbf{AND} \texttt{00010100 (20)} $\rightarrow$ Decimal: 20, Octal: 24, Hex: 14;
+    
+    \item \texttt{11111111 (255)} \textbf{AND} \texttt{11111111 (255)} $\rightarrow$ Decimal: 255, Octal: 377, Hex: 0FF;
+    
+    \item \texttt{11010100 (212)} \textbf{AND} \texttt{10111010 (186)} $\rightarrow$ Decimal: 144, Octal: 220, Hex: 090;
+\end{itemize}
+
+Os testes foram executados utilizando a ferramenta \textit{Simulation} do \textit{Quartus}, confirmando o comportamento esperado da operação lógica \textbf{AND} bit a bit. Em todas as simulações, os resultados foram coerentes com as tabelas verdades previstas e as flags foram ativadas corretamente quando aplicável.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{testeportaand.png}
+    \caption{Testes da operação lógica AND de 8 bits. Fonte: Autoria própria. 2025.}
+    \label{fig:testeand}
+\end{figure}
+
+
+
+\subsubsection{MÓDULO OPERAÇÃO OR DE 8 BITS NA ULA}
+
+Os testes realizados para validar o funcionamento da operação lógica \textbf{OR} de 8 bits estão apresentados a seguir. Cada operação foi analisada nas bases decimal, octal e hexadecimal, destacando o acionamento da flag \textit{Zero} quando o resultado é nulo.
+
+\begin{itemize}
+    \item \texttt{00000000 (0)} \textbf{OR} \texttt{00000000 (0)} $\rightarrow$ Decimal: 0, Octal: 0, Hex: 0;  
+    *(Flag Zero);
+    
+    \item \texttt{01010101 (85)} \textbf{OR} \texttt{00010100 (20)} $\rightarrow$ Decimal: 85, Octal: 125, Hex: 055;
+    
+    \item \texttt{11111111 (255)} \textbf{OR} \texttt{11111111 (255)} $\rightarrow$ Decimal: 255, Octal: 377, Hex: 0FF;
+    
+    \item \texttt{00111101 (61)} \textbf{OR} \texttt{00111101 (61)} $\rightarrow$ Decimal: 61, Octal: 75, Hex: 3D;
+\end{itemize}
+
+Os testes foram executados utilizando a ferramenta \textit{Simulation} do \textit{Quartus}, confirmando o comportamento esperado da operação lógica \textbf{OR} bit a bit. Em todas as simulações, os resultados foram coerentes com as tabelas verdades previstas e as flags foram ativadas corretamente quando aplicável.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{testeportaor.png}
+    \caption{Testes da operação lógica OR de 8 bits. Fonte: Autoria própria. 2025.}
+    \label{fig:testeor}
+\end{figure}
+
+\subsubsection{MÓDULO OPERAÇÃO XOR DE 8 BITS NA ULA}
+
+Os testes realizados para validar o funcionamento da operação lógica \textbf{XOR} de 8 bits estão apresentados a seguir. Cada operação foi analisada nas bases decimal, octal e hexadecimal, destacando o acionamento da flag \textit{Zero} quando o resultado é nulo.
+
+\begin{itemize}
+    \item \texttt{00000000 (0)} \textbf{XOR} \texttt{00000000 (0)} $\rightarrow$ Decimal: 0, Octal: 0, Hex: 0;  
+    *(Flag Zero);
+    
+    \item \texttt{01010101 (85)} \textbf{XOR} \texttt{00010100 (20)} $\rightarrow$ Decimal: 65, Octal: 101, Hex: 41;
+    
+    \item \texttt{01010101 (85)} \textbf{XOR} \texttt{00010110 (22)} $\rightarrow$ Decimal: 67, Octal: 103, Hex: 43;
+\end{itemize}
+
+Os testes foram executados utilizando a ferramenta \textit{Simulation} do \textit{Quartus}, confirmando o comportamento esperado da operação lógica \textbf{XOR} bit a bit. Em todas as simulações, os resultados foram coerentes com as tabelas verdades previstas e as flags foram ativadas corretamente quando aplicável.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{testeportaxor.png}
+    \caption{Testes da operação lógica XOR de 8 bits. Fonte: Autoria própria. 2025.}
+    \label{fig:testexor}
+\end{figure}
+
+
+\subsubsection{MÓDULO OPERAÇÃO NOT DE 8 BITS NA ULA}
+
+Os testes realizados para validar o funcionamento da operação lógica \textbf{NOT} de 8 bits estão apresentados a seguir. Cada operação foi analisada nas bases decimal, octal e hexadecimal, destacando o acionamento da flag \textit{Zero} quando o resultado é nulo.
+
+\begin{itemize}
+    \item \texttt{00000000 (0)} $\rightarrow$ Decimal: 255, Octal: 377, Hex: 0FF;
+    
+    \item \texttt{11111111 (255)} $\rightarrow$ Decimal: 0, Octal: 0, Hex: 0;  
+    *(Flag Zero);
+    
+    \item \texttt{10101010 (170)} $\rightarrow$ Decimal: 85, Octal: 125, Hex: 055;
+\end{itemize}
+
+Os testes foram executados utilizando a ferramenta \textit{Simulation} do \textit{Quartus}, confirmando o comportamento esperado da operação lógica \textbf{NOT} bit a bit. Em todas as simulações, os resultados foram coerentes com as tabelas verdades previstas e as flags foram ativadas corretamente quando aplicável.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{testeportanot.png}
+    \caption{Testes da operação lógica NOT de 8 bits. Fonte: Autoria própria. 2025.}
+    \label{fig:testenot}
+\end{figure}
+
+
+
+\subsubsection{MÓDULO OPERAÇÃO RPN}
+
+Nesse teste, é possível ver claramente a mudança de estados do contador e o uso do resultado anterior na operação seguinte.
+
+Os testes foram executados utilizando a ferramenta \textit{Simulation} do \textit{Quartus}, confirmando o comportamento esperado da operação lógica \textbf{NOT} bit a bit. Em todas as simulações, os resultados foram coerentes com as tabelas verdades previstas e as flags foram ativadas corretamente quando aplicável.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{operacaorpn.png}
+    \caption{Teste da operação RPN de 8 bits. Fonte: Autoria própria. 2025.}
+    \label{fig:rpnteste}
+\end{figure}
+
+
+\section{\textbf{CONCLUSÃO}}
+
+Com a realização deste projeto, foi possível compreender de forma prática o funcionamento de um circuito digital completo, com toda a sua complexidade — desde o registro e manejo de dados até a exibição do resultado. Observou-se a importância do \textit{clock} como elemento central de sincronização das operações e do uso de registradores para garantir que nenhuma informação fosse perdida no sistema.
+
+A proposta também exigiu a otimização dos recursos físicos da FPGA, considerando que há apenas dez chaves seletoras e que o sistema trabalha com 16 bits apenas de operandos. Foi necessário planejar estrategicamente as entradas e saídas de dados, seus registros e os sinais de habilitação, evitando gravações múltiplas e conflitos em momentos incorretos.
+
+Por fim, o desenvolvimento em uma notação pouco usual para cálculos (RPN) e o uso de bases numéricas que fogem do cotidiano contribuíram para um raciocínio mais flexível, proporcionando uma visão ampla sobre hardware e linguagens de descrição de alto nível. O projeto serviu, portanto, como uma base sólida para o entendimento de arquiteturas mais complexas de processamento digital.
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{abntex2-modelo-references}
+
+
+\end{document}
